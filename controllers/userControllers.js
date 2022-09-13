@@ -6,7 +6,8 @@ const bcrypt = require("bcrypt");
 const register = async (req, res) => {
   const { name, email, description, password } = req.body;
   const emailExists = await User.findOne({ email: email });
-  if (emailExists) return res.status(400).send("email already exists");
+  if (emailExists)
+    return res.status(400).json({ message: "email already exists" });
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(req.body.password, salt);
   const user = new User({ name, email, description, password: hashedPassword });
@@ -23,7 +24,7 @@ const getOneUser = async (req, res) => {
   try {
     const user = await User.findOne({ name: name });
     if (!user) return res.status(400).send("no user with the username");
-    res.send({ name: user.name, description: user.description });
+    res.send({ name: user.name, description: user.description, _id: user._id });
   } catch (error) {
     res.send(error);
   }
@@ -43,14 +44,16 @@ const login = async (req, res) => {
   //password comparison
   const validPass = await bcrypt.compare(req.body.password, user.password);
   if (!validPass) return res.status(400).send("invalid password");
-  res.send("logged in !");
+  res.send(user);
 };
 const updateUser = async (req, res) => {
   const { id } = req.params;
   const { name, email, description, password } = req.body;
 
-  if (!mongoose.Types.ObjectId.isValid(id))
-    return res.status(404).send(`No user with id: ${id}`);
+  const user = await User.findOne({ _id: id });
+
+  if (!user) return res.status(404).send(`No user with id: ${id}`);
+
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
