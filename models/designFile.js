@@ -3,17 +3,43 @@ const mongoose = require("mongoose");
 // user schema
 
 const designFileSchema = new mongoose.Schema({
+  figmaApiKey: {
+    type: String,
+
+    min: 2,
+    max: 255,
+  },
+  ownerName: {
+    type: String,
+    min: 2,
+    max: 255,
+  },
+  figmaId: {
+    type: String,
+    min: 2,
+    max: 255,
+  },
   fileUrl: {
     type: String,
-    required: true,
+
+    min: 2,
+    max: 255,
+  },
+  fileName: {
+    type: String,
+
+    min: 2,
+    max: 255,
+  },
+  projectName: {
+    type: String,
     min: 2,
     max: 255,
   },
   thumbnailUrl: {
     type: String,
-    required: true,
+
     min: 5,
-    max: 255,
   },
   lastModified: {
     type: String,
@@ -29,7 +55,7 @@ const designFileSchema = new mongoose.Schema({
   },
   description: {
     type: String,
-    required: true,
+
     min: 1,
     max: 255,
     default: "",

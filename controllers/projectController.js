@@ -23,13 +23,12 @@ const getProject = async (req, res) => {
 //   create project
 
 const createProject = async (req, res) => {
-  const { projectName, description, fileNames, projectMembers } = req.body;
+  const { projectName, description, ownerName } = req.body;
 
   const newProject = new Project({
     projectName,
     description,
-    fileNames,
-    projectMembers,
+    ownerName,
   });
 
   try {

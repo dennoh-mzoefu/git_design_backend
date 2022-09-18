@@ -3,6 +3,12 @@ const mongoose = require("mongoose");
 // user schema
 
 const projectSchema = new mongoose.Schema({
+  ownerName: {
+    type: String,
+    required: true,
+    min: 2,
+    max: 255,
+  },
   projectName: {
     type: String,
     required: true,
@@ -17,8 +23,7 @@ const projectSchema = new mongoose.Schema({
     default: "",
   },
   fileNames: {
-    type: String,
-    required: true,
+    type: [String],
     min: 5,
     max: 255,
     default: "",
@@ -26,13 +31,10 @@ const projectSchema = new mongoose.Schema({
   projectMembers: {
     name: {
       type: String,
-      required: true,
       min: 8,
     },
     message: {
       type: String,
-      required: true,
-      min: 8,
     },
   },
   date: {
