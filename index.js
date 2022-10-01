@@ -8,7 +8,6 @@ const CONNECTION__URL =
 const PORT = 5000 || 8000;
 
 app.use(cors());
-
 app.use(express.json());
 app.use("/users", require("./routes/userRoute.js"));
 app.use("/projects", require("./routes/projectRoute.js"));

@@ -125,8 +125,9 @@ const getDesignFile = async (req, res) => {
 };
 
 const getDesignFiles = async (req, res) => {
+  const { ownerName } = req.query;
   try {
-    const designFiles = await DesignFile.find();
+    const designFiles = await DesignFile.find({ ownerName: ownerName });
 
     res.status(200).json(designFiles);
   } catch (error) {
