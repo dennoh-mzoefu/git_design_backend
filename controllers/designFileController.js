@@ -1,9 +1,21 @@
 const DesignFile = require("../models/designFile.js");
 const ActivityLog = require("../models/activityLog.js");
+const needle = require("needle");
 var fetch = require("isomorphic-fetch");
+var fs = require("fs");
 
 // const figmaApiKey = "figd_-5wK1DvxUHrOPQJn0wu6jxnwbDhnbmnG2Yuh8biM";
 
+const needleDownload = (thumbnailUrl) => {
+  const path = `images/thumbnail/${Date.now()}.png`;
+  needle.get(thumbnailUrl).pipe(
+    fs.createWriteStream(path).on("done", function (err) {
+      console.log("Pipe finished!");
+    })
+  );
+
+  return path;
+};
 const createFigmaFile = async function (req, res, next) {
   const {
     figmaId,
@@ -15,18 +27,12 @@ const createFigmaFile = async function (req, res, next) {
     thumbnailUrl,
     lastModified,
   } = req.body;
-  // var { fileUrl, thumbnail, lastModified } = await getImagesFromFigma(
-  //   figmaId,
-  //   figmaApiKey
-  // );
-
-  // const FileUrl = fileUrl.fileUrl.fileUrl.Cover;
-  //   send thumbnail, image and description,lastmodified
-
+  const url = thumbnailUrl;
+  const pathUrl = needleDownload(thumbnailUrl);
   try {
     const designFile = new DesignFile({
       fileUrl: "FileUrl",
-      thumbnailUrl,
+      thumbnailUrl: pathUrl,
       lastModified,
       description,
       fileName,
@@ -35,16 +41,7 @@ const createFigmaFile = async function (req, res, next) {
       ownerName,
       figmaApiKey,
     });
-    console.log(
-      thumbnailUrl,
-      lastModified,
-      description,
-      fileName,
-      projectName,
-      figmaId,
-      ownerName,
-      figmaApiKey
-    );
+
     const savedDesignFile = await designFile.save();
     try {
       const activityLog = new ActivityLog({
