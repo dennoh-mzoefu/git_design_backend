@@ -7,14 +7,14 @@ var fs = require("fs");
 // const figmaApiKey = "figd_-5wK1DvxUHrOPQJn0wu6jxnwbDhnbmnG2Yuh8biM";
 
 const needleDownload = (thumbnailUrl) => {
-  const path = `images/thumbnail/${Date.now()}.png`;
+  const path2 = Date.now();
+  const path = `../frontend/src/Components/Home/images/thumbnail/${path2}.png`;
   needle.get(thumbnailUrl).pipe(
     fs.createWriteStream(path).on("done", function (err) {
       console.log("Pipe finished!");
     })
   );
-
-  return path;
+  return path2;
 };
 const createFigmaFile = async function (req, res, next) {
   const {
