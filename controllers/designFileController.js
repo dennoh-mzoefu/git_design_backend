@@ -8,7 +8,7 @@ var fs = require("fs");
 
 const needleDownload = (thumbnailUrl) => {
   const path2 = Date.now();
-  const path = `../frontend/public/images/${path2}.png`;
+  const path = `../frontend/public/images/thumbnail/${path2}.png`;
   needle.get(thumbnailUrl).pipe(
     fs.createWriteStream(path).on("done", function (err) {
       console.log("Pipe finished!");
