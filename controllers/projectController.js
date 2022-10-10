@@ -14,7 +14,7 @@ const getProject = async (req, res) => {
   const { projectName } = req.params;
   try {
     const project = await Project.findOne({ projectName: projectName });
-    if (!project) return res.status(400).send("no such project");
+    res.status(200).send(project);
   } catch (error) {
     res.send(error);
   }
