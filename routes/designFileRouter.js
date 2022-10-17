@@ -4,5 +4,6 @@ router.post("/create", designFileController.createFigmaFile);
 router.post("/:id", designFileController.updateDesignFile);
 router.get("/:id", designFileController.getDesignFile);
 router.get("/", designFileController.getDesignFiles);
+router.get("/designfiles", designFileController.getDesignFiles);
 
 module.exports = router;

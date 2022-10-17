@@ -131,6 +131,19 @@ const getDesignFiles = async (req, res) => {
     res.status(404).json({ message: error.message });
   }
 };
+const getProjectDesignFiles = async (req, res) => {
+  const { ownerName, projectName } = req.query;
+  try {
+    const designFiles = await DesignFile.find({
+      ownerName: ownerName,
+      projectName: projectName,
+    });
+
+    res.status(200).json(designFiles);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
 
 const updateDesignFile = async (req, res) => {
   const { id } = req.params;
@@ -172,4 +185,5 @@ module.exports = {
   getDesignFile,
   updateDesignFile,
   getDesignFiles,
+  getProjectDesignFiles,
 };
