@@ -1,5 +1,6 @@
 const DesignFile = require("../models/designFile.js");
 const ActivityLog = require("../models/activityLog.js");
+const Project = require("../models/project.js");
 const needle = require("needle");
 var fetch = require("isomorphic-fetch");
 var fs = require("fs");
@@ -51,10 +52,24 @@ const createFigmaFile = async function (req, res, next) {
         ownerName,
       });
       const activityLogged = await activityLog.save();
+      try {
+        const project = Project.find({ projectName: projectName });
+        const updatedFilenames = project.filenames;
+        updatedFilenames.push(fileName);
+        const updatedProject = await Project.findByIdAndUpdate(
+          project._id,
+          { fileNames: updatedFilenames },
+          { new: true }
+        );
+        console.log("updatedProject");
+      } catch (error) {
+        console.log(error);
+      }
       // return res.send(activityLogged);
     } catch (error) {
       return res.send(error);
     }
+
     return res.send(savedDesignFile);
   } catch (error) {
     return res.send(error);
@@ -62,52 +77,6 @@ const createFigmaFile = async function (req, res, next) {
 
   // res.json(FileUrl);
 };
-
-// async function getImagesFromFigma(figmaId, figmaApiKey) {
-// //   // Nv8nCYDQKjipTrdHHXXsen
-//   let result = await fetch(`https://api.figma.com/v1/files/${figmaId}`, {
-//     method: "GET",
-//     headers: {
-//       "X-Figma-Token": figmaApiKey,
-//     },
-//   });
-//   let figmaTreeStructure = await result.json();
-//   console.log("figmaTreeStructure");
-//   var thumbnail = figmaTreeStructure.thumbnailUrl;
-//   var lastModified = figmaTreeStructure.lastModified;
-//   //   return figmaTreeStructure;
-
-//   // added code
-
-//   let children = figmaTreeStructure.document?.children.map((frame) => {
-//     return {
-//       name: frame.name,
-//       id: frame.id,
-//     };
-//   });
-//   let ids = children.map((ethmoji) => ethmoji.id).join(",");
-
-//   let imageResult = await fetch(
-//     `https://api.figma.com/v1/images/${figmaId}?scale=2&ids=${ids}`,
-//     {
-//       method: "GET",
-//       headers: {
-//         "X-Figma-Token": figmaApiKey,
-//       },
-//     }
-//   );
-//   let figmaImages = await imageResult.json();
-//   figmaImages = figmaImages.images;
-
-//   return children.reduce(function (map, ethmoji) {
-//     map[ethmoji.name] = figmaImages[ethmoji.id];
-//     var fileUrl = map;
-
-//     console.log(fileUrl);
-//     return { fileUrl, thumbnail, lastModified };
-//   }, {});
-// }
-// get design file
 
 const getDesignFile = async (req, res) => {
   const { id } = req.params;

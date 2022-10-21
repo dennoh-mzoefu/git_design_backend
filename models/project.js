@@ -22,12 +22,7 @@ const projectSchema = new mongoose.Schema({
     max: 255,
     default: "",
   },
-  fileNames: {
-    type: [String],
-    min: 5,
-    max: 255,
-    default: "",
-  },
+  fileNames: [String],
   projectMembers: {
     name: {
       type: String,
