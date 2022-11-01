@@ -4,13 +4,19 @@ const bcrypt = require("bcrypt");
 
 // controller functions
 const register = async (req, res) => {
-  const { name, email, description, password } = req.body;
+  const { name, email, description, password, profilePic } = req.body;
   const emailExists = await User.findOne({ email: email });
   if (emailExists)
     return res.status(400).json({ message: "email already exists" });
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(req.body.password, salt);
-  const user = new User({ name, email, description, password: hashedPassword });
+  const user = new User({
+    name,
+    email,
+    description,
+    password: hashedPassword,
+    profilePic,
+  });
 
   try {
     const savedUser = await user.save();
