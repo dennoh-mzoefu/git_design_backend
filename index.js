@@ -14,6 +14,7 @@ app.use("/projects", require("./routes/projectRoute.js"));
 app.use("/designFile", require("./routes/designFileRouter.js"));
 app.use("/activityLog", require("./routes/activityLogRoute.js"));
 app.use("/chat", require("./routes/chatRoutes.js"));
+app.use("/notification", require("./routes/notificationRoute.js"));
 
 mongoose
   .connect(CONNECTION__URL, { useNewUrlParser: true, useUnifiedTopology: true })
