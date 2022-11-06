@@ -23,15 +23,7 @@ const projectSchema = new mongoose.Schema({
     default: "",
   },
   fileNames: [String],
-  projectMembers: {
-    name: {
-      type: String,
-      min: 8,
-    },
-    message: {
-      type: String,
-    },
-  },
+  projectMembers:[String] ,
   date: {
     type: Date,
     default: Date.now(),

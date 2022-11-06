@@ -20,6 +20,11 @@ const notificationSchema = new mongoose.Schema({
     min: 2,
     max: 255,
   },
+  sender: {
+    type: String,
+    min: 2,
+    max: 255,
+  },
   link: {
     type: String,
     min: 2,
