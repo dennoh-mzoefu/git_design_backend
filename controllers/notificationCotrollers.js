@@ -2,10 +2,10 @@ const Notification = require("../models/notification.js");
 const Project = require("../models/project.js");
 
 const getNotifications = async (req, res) => {
-  const { name } = req.body;
+  const { projectName } = req.body;
   try {
     // call getall designFile controller and filter all apart from desscription and date
-    const notification = await Notification.find({ name: name });
+    const notification = await Notification.find({ projectName: projectName });
     res.send(notification);
   } catch (error) {
     res.send(error);
@@ -26,7 +26,7 @@ const acceptNotifications = async (req, res) => {
     // call getall designFile controller and filter all apart from desscription and date
     const notification = await Notification.deleteOne({ _id: _id });
     const project1 = await Project.findOne({ projectName: projectName });
-    project1.fileNames.push[receiver];
+    project1.projectMembers.push[receiver];
     const project = await Project.updateOne(projectName, project1);
     res.json({ notification, project });
   } catch (error) {
