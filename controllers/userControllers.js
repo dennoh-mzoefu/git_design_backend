@@ -30,7 +30,7 @@ const getOneUser = async (req, res) => {
   try {
     const user = await User.findOne({ name: name });
     if (!user) return res.status(400).send("no user with the username");
-    res.send({ name: user.name, description: user.description, _id: user._id });
+    res.send(user);
   } catch (error) {
     res.send(error);
   }
