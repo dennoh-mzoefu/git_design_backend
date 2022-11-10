@@ -2,10 +2,10 @@ const Notification = require("../models/notification.js");
 const Project = require("../models/project.js");
 
 const getNotifications = async (req, res) => {
-  const { projectName } = req.body;
+  const { receiver } = req.params;
   try {
     // call getall designFile controller and filter all apart from desscription and date
-    const notification = await Notification.find({ projectName: projectName });
+    const notification = await Notification.find({ receiver: receiver });
     res.send(notification);
   } catch (error) {
     res.send(error);
