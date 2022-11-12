@@ -29,7 +29,8 @@ const getOneUser = async (req, res) => {
   const { name } = req.params;
   try {
     const user = await User.findOne({ name: name });
-    if (!user) return res.status(400).send("no user with the username");
+    if (!user)
+      return res.status(400).json({ message: "no user with the username" });
     res.send(user);
   } catch (error) {
     res.send(error);
@@ -46,10 +47,10 @@ const getAllUsers = async (req, res) => {
 const login = async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email: email });
-  if (!user) return res.status(400).send("email does not exist");
+  if (!user) return res.status(400).json({ message: "email does not exist" });
   //password comparison
   const validPass = await bcrypt.compare(req.body.password, user.password);
-  if (!validPass) return res.status(400).send("invalid password");
+  if (!validPass) return res.status(400).json({ message: "invalid password" });
   res.send(user);
 };
 const updateUser = async (req, res) => {
@@ -58,7 +59,7 @@ const updateUser = async (req, res) => {
 
   const user = await User.findOne({ _id: id });
 
-  if (!user) return res.status(404).send(`No user with id: ${id}`);
+  if (!user) return res.status(404).json({ message: `No user with id: ${id}` });
 
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(req.body.password, salt);

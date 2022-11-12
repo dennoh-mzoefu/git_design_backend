@@ -2,8 +2,9 @@ const Project = require("../models/project.js");
 
 // controller functions
 const getProjects = async (req, res) => {
+  const { ownerName } = req.params;
   try {
-    const projects = await Project.find();
+    const projects = await Project.find({ ownerName: ownerName });
 
     res.status(200).json(projects);
   } catch (error) {
@@ -13,7 +14,9 @@ const getProjects = async (req, res) => {
 const getProject = async (req, res) => {
   const { projectName } = req.params;
   try {
-    const project = await Project.findOne({ projectName: projectName });
+    const project = await Project.findOne({
+      projectName: projectName,
+    });
     res.status(200).send(project);
   } catch (error) {
     res.send(error);
@@ -29,6 +32,7 @@ const createProject = async (req, res) => {
     projectName,
     description,
     ownerName,
+    projectMembers: [ownerName],
   });
 
   try {
