@@ -26,12 +26,13 @@ const getVersion = async (req, res) => {
 //   create version
 
 const createVersion = async (req, res) => {
-  const { version, fileName, designFile } = req.body;
+  const { version, fileName, designFile, difference } = req.body;
 
   const newVersion = new Version({
     version,
     fileName,
     designFile,
+    difference,
   });
 
   try {
