@@ -13,7 +13,6 @@ const versionSchema = new mongoose.Schema({
   designFile: {
     type: String,
   },
-
   date: {
     type: Date,
     default: Date.now(),
