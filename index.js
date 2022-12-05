@@ -11,6 +11,7 @@ app.use(cors());
 app.use(express.json());
 app.use("/users", require("./routes/userRoute.js"));
 app.use("/projects", require("./routes/projectRoute.js"));
+app.use("/collab-projects", require("./routes/projectCollabRoute.js"));
 app.use("/versions", require("./routes/versionRouter.js"));
 app.use("/designFile", require("./routes/designFileRouter.js"));
 app.use("/activityLog", require("./routes/activityLogRoute.js"));
