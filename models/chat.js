@@ -1,10 +1,17 @@
 const { model, Schema } = require("mongoose");
 const Chat = new Schema({
-  _id: String,
-  author: String,
-  time: String,
-  room: String,
-  message: String,
+  author: {
+    type: String,
+  },
+  time: {
+    type: String,
+  },
+  room: {
+    type: String,
+  },
+  message: {
+    type: String,
+  },
 });
 // const Notification = new Schema({
 //   sender: String,
