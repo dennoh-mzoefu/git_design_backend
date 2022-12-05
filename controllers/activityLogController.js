@@ -9,7 +9,21 @@ const getActivityLogs = async (req, res) => {
     res.send(error);
   }
 };
-
+const saveActivityLog = async (req, res) => {
+  try {
+    const activityLog = new ActivityLog({
+      Subject: req.body.description,
+      StartTime: req.body.startTime,
+      fileName: req.body.fileName,
+      ownerName: req.body.ownerName,
+    });
+    const activityLogged = await activityLog.save();
+    return res.send(activityLogged);
+  } catch (error) {
+    res.send(error);
+  }
+};
 module.exports = {
   getActivityLogs,
+  saveActivityLog,
 };
