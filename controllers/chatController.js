@@ -14,7 +14,7 @@ const chatSave = async (req, res) => {
 };
 
 const getAllChats = async (req, res) => {
-  const { room } = req.body;
+  const { room } = req.params;
   try {
     const chats = await Chat.find({ room: room });
     res.json(chats);
